@@ -1,5 +1,6 @@
 require_relative '../lib/image_selector'
 require_relative '../lib/gps_extractor'
+require_relative '../lib/csv_exporter'
 
 require 'byebug'
 require 'exif'
