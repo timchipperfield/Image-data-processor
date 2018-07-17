@@ -19,6 +19,6 @@ class ImageSelector
   private
 
   def included_types
-    ['.jpeg', '.tiff', '.png']
+    ['.jpeg', '.tiff', '.png', '.jpg']
   end
 end
