@@ -1,4 +1,4 @@
-# Image-data-processor [![Build Status](https://travis-ci.com/timchipperfield/Image-data-processor.svg?branch=master)]
+# Image-data-processor [Build Status](https://travis-ci.com/timchipperfield/Image-data-processor.svg?branch=master)
 A command-line application for processing image gps data
 
 ## Overview
