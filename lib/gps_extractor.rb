@@ -7,8 +7,13 @@ class GPSExtractor
   end
 
   def extract_data
-    data = Exif::Data.new(File.open(filename))
-    make_gps_hash data
+    begin
+      data = Exif::Data.new(File.open(filename))
+      make_gps_hash data
+    rescue Exif::NotReadable
+      p "#{File.basename(filename)} does not contain EXIF data"
+      {lat: nil, lng: nil, filename: File.basename(filename)}
+    end
   end
 
   private

@@ -1,32 +1,57 @@
 describe ImageSelector do
 
   describe '#initialize' do
-    let(:directory) { '/example/path' }
-    let(:selector) { ImageSelector.new(directory) }
-
     context 'when no directory name is passed' do
       let(:selector) { ImageSelector.new }
 
       it 'defaults to the current directory' do
         expect(selector.directory).to eq Dir.pwd
       end
-    end
 
-    context 'when a directory name is passed' do
-      it 'uses the directory name parameter' do
-        expect(selector.directory).to eq directory
+      it 'creates a filename array' do
+        expect(selector.file_array).to eq []
       end
     end
 
-    it 'creates a filename array' do
-      expect(selector.file_array).to eq []
+    context 'when a directory name is passed' do
+      let(:directory) { '/example/path' }
+      let(:selector) { ImageSelector.new(directory) }
+
+      it 'uses the directory name parameter' do
+        expect(selector.directory).to eq directory
+      end
+
+      it 'creates a filename array' do
+        expect(selector.file_array).to eq []
+      end
     end
   end
 
   describe '#select_files' do
     let(:selector) { ImageSelector.new("/random_files") }
 
-    context 'when there are files in the #directory' do
+    context 'when there are no files in the directory' do
+
+    end
+
+    context 'when the files are in a recursively placed directory' do
+      def create_image_file
+        FakeFS do
+          FileUtils.mkdir("/random_files")
+          FileUtils.mkdir("/random_files/test_folder")
+          File.open("/random_files/test_folder/image.jpeg", "w")
+        end
+      end
+
+      it 'finds the image', fakefs: true do
+        create_image_file
+        selector.select_files
+
+        expect(selector.file_array).to include("/random_files/test_folder/image.jpeg")
+      end
+    end
+
+    context 'when there are files in the directory' do
       context 'when they are valid images' do
         def create_image_files
           FakeFS do

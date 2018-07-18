@@ -8,7 +8,7 @@ class ImageSelector
   end
 
   def select_files
-    files = Dir.glob("#{@directory}/*")
+    files = recursive_search
     files.each do |file|
       if included_types.any? { |type| file.match(type) }
         @file_array << file
@@ -20,5 +20,12 @@ class ImageSelector
 
   def included_types
     ['.jpeg', '.tiff', '.png', '.jpg']
+  end
+
+  def recursive_search
+    Dir.chdir(directory) do
+      @files = Dir.glob("**/*.*").map {|path| File.expand_path(path) }
+    end
+    @files
   end
 end
