@@ -1,3 +1,5 @@
+require 'exif'
+
 class GPSExtractor
 
   attr_reader :filename

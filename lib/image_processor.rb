@@ -1,12 +1,17 @@
+require_relative './csv_exporter'
+require_relative './image_selector'
+require_relative './gps_extractor'
+
 class ImageProcessor
 
   def initialize directory
-    @directory = directory
+    @directory = directory ||= Dir.pwd
   end
 
   def process
     selector = ImageSelector.new(@directory)
-    files = selector.select_files
+    selector.select_files
+    files = selector.file_array
     data_array = extract_files files
     export_csv data_array
   end
