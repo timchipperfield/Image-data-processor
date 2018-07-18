@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Image Data</title>
+</head>
+
+<body>
+  <div>
+    <table>
+      <thead>
+        <tr>
+          <% @headers.each do |header| %>
+            <th><%= header %></th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <% @rows.each do |row| %>
+          <tr>
+            <td><%= row[:filename] %></td>
+            <td><%= row[:lat] %></td>
+            <td><%= row[:lng] %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</body>

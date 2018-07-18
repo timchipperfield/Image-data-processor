@@ -4,7 +4,7 @@ describe CSVExporter do
 
   describe "#build_csv" do
     context 'when the data array is empty' do
-      it 'still creates a blank csv' do
+      it 'does not create the csv' do
         hash_array = []
 
         expect(CSV).to_not receive(:open)

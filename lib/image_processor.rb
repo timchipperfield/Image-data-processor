@@ -1,11 +1,13 @@
 require_relative './csv_exporter'
 require_relative './image_selector'
 require_relative './gps_extractor'
+require_relative './html_exporter'
 
 class ImageProcessor
 
-  def initialize directory
-    @directory = directory ||= Dir.pwd
+  def initialize parameters_hash = {}
+    @html = parameters_hash[:html] ||= false
+    @directory = parameters_hash[:directory] ||= Dir.pwd
   end
 
   def process
@@ -13,7 +15,7 @@ class ImageProcessor
     selector.select_files
     files = selector.file_array
     data_array = extract_files files
-    export_csv data_array
+    export_file data_array
   end
 
   private
@@ -25,6 +27,19 @@ class ImageProcessor
       data_array << extractor.extract_data
     end
     data_array
+  end
+
+  def export_file data_array
+    if @html
+      export_html data_array
+    else
+      export_csv data_array
+    end
+  end
+
+  def export_html data_array
+    html_exporter = HTMLExporter.new(data_array)
+    html_exporter.build_html_doc
   end
 
   def export_csv data_array

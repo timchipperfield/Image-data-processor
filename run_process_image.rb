@@ -1,7 +1,8 @@
 #!/usr/bin/env ruby
+require_relative './lib/parameters_parser'
 require_relative './lib/image_processor'
 
-directory = ARGV[0]
+params = ParametersParser.new(ARGV).parse
 
-processor = ImageProcessor.new(directory)
+processor = ImageProcessor.new(params)
 processor.process
